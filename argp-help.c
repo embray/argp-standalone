@@ -1697,13 +1697,13 @@ __argp_help(const struct argp* argp, FILE* stream, unsigned flags, char* name)
 weak_alias(__argp_help, argp_help)
 #endif
 
-    char* __argp_basename(char* name)
+    ARGP_HIDDEN char* __argp_basename(char* name)
 {
     char* short_name = strrchr(name, '/');
     return short_name ? short_name + 1 : name;
 }
 
-char*
+ARGP_HIDDEN char*
 __argp_short_program_name(const struct argp_state* state)
 {
     if (state)
@@ -1755,10 +1755,10 @@ weak_alias(__argp_state_help, argp_state_help)
     /* If appropriate, print the printf string FMT and following args, preceded
        by the program name and `:', to stderr, and followed by a `Try ... --help'
        message, then exit (1).  */
-    void __argp_error_internal(const struct argp_state* state,
-                               const char* fmt,
-                               va_list ap,
-                               unsigned int mode_flags)
+    ARGP_HIDDEN void __argp_error_internal(const struct argp_state* state,
+                                           const char* fmt,
+                                           va_list ap,
+                                           unsigned int mode_flags)
 {
     if (!state || !(state->flags & ARGP_NO_ERRS))
     {
@@ -1818,12 +1818,12 @@ weak_alias(__argp_error, argp_error)
        difference between this function and argp_error is that the latter is for
        *parsing errors*, and the former is for other problems that occur during
        parsing but don't reflect a (syntactic) problem with the input.  */
-    void __argp_failure_internal(const struct argp_state* state,
-                                 int status,
-                                 int errnum,
-                                 const char* fmt,
-                                 va_list ap,
-                                 unsigned int mode_flags)
+    ARGP_HIDDEN void __argp_failure_internal(const struct argp_state* state,
+                                             int status,
+                                             int errnum,
+                                             const char* fmt,
+                                             va_list ap,
+                                             unsigned int mode_flags)
 {
     if (!state || !(state->flags & ARGP_NO_ERRS))
     {
