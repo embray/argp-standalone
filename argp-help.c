@@ -91,7 +91,7 @@ dgettext_safe(const char* d, const char* m)
 #include "argp-namefrob.h"
 
 #ifndef SIZE_MAX
-#define SIZE_MAX ((size_t) -1)
+#define SIZE_MAX ((size_t) - 1)
 #endif
 
 /* User-selectable (using an environment variable) formatting parameters.
@@ -1360,13 +1360,16 @@ argp_hol(const struct argp* argp, struct hol_cluster* cluster)
     if (child)
         while (child->argp)
         {
-            struct hol_cluster* child_cluster
-                = ((child->group || child->header)
-                       /* Put CHILD->argp within its own cluster.  */
-                       ? hol_add_cluster(
-                           hol, child->group, child->header, child - argp->children, cluster, argp)
-                       /* Just merge it into the parent's cluster.  */
-                       : cluster);
+            struct hol_cluster* child_cluster = ((child->group || child->header)
+                                                     /* Put CHILD->argp within its own cluster.  */
+                                                     ? hol_add_cluster(hol,
+                                                                       child->group,
+                                                                       child->header,
+                                                                       child - argp->children,
+                                                                       cluster,
+                                                                       argp)
+                                                     /* Just merge it into the parent's cluster.  */
+                                                     : cluster);
             hol_append(hol, argp_hol(child->argp, child_cluster));
             child++;
         }
